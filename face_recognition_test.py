@@ -31,16 +31,8 @@ while cap.isOpened():
     resized = tf.image.resize(rgb, (224, 224))
     yhat = face_detector.predict(np.expand_dims(resized/255, 0))
 
-    sample_coords = yhat[1][0]
-    xmin = sample_coords[0]
-    ymin = sample_coords[1]
-    xmax = sample_coords[2]
-    ymax = sample_coords[3]
-
-    abs_xmin = np.multiply(xmin, 720).astype(int)
-    abs_ymin = np.multiply(ymin, 720).astype(int)
-    abs_xmax = np.multiply(xmax, 720).astype(int)
-    abs_ymax = np.multiply(ymax, 720).astype(int)
+    xmin, ymin, xmax, ymax = yhat[1][0]
+    abs_xmin, abs_ymin, abs_xmax, abs_ymax = np.multiply([xmin, ymin, xmax, ymax], 720).astype(int)
     
     if yhat[0] > 0.5: 
         cv2.rectangle(frame, (abs_xmin - 20, abs_ymin - 20), (abs_xmax - 50, abs_ymax - 50), (255,0,0), 2)
