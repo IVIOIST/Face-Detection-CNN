@@ -47,7 +47,7 @@ while cap.isOpened():
             result = face_recognition.compare_faces(my_face_encoding, unknown_face_encoding)
             print(result)
         except:
-            continue
+            pass
 
     cv2.imshow('Real Time', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
