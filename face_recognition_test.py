@@ -1,7 +1,6 @@
 import cv2
 import time
 import numpy as np
-import uuid
 import os
 import tensorflow as tf
 from tensorflow import keras
@@ -10,6 +9,7 @@ import face_recognition
 import ctypes
 
 
+# Tensorflow Setup
 GPU = tf.config.list_physical_devices('GPU')
 try:
     tf.config.experimental.set_memory_growth(GPU[0], True)
@@ -19,6 +19,7 @@ except:
 
 face_detector = load_model('VGG19_REV1.h5')
 
+# Face_Recognition Setup
 known_faces = []
 for i in range(1, 9):
     my_face = face_recognition.load_image_file(os.path.join('face_data', 'known', f'face{i}.jpg'))
@@ -28,10 +29,12 @@ for i in range(1, 9):
     else:
         print(f"No face detected in image face{i}.jpg")
 
+# OpenCV Setup
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
+# Declaring Variables
 counter = 0
 last_reset_time = time.time()
 
@@ -79,6 +82,7 @@ while cap.isOpened():
     time.sleep(1)
     cv2.imshow('Real Time', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        break 
+
 cap.release()
 cv2.destroyAllWindows()
